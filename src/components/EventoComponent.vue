@@ -2,7 +2,7 @@
   <div class="evento">
     <div class="live-badge bg-danger text-white">LIVE</div>
     <a :href="eventoLink">
-      <img :src="eventoImagenSrc" :alt="`Evento ${eventoNumero}`" class="img-fluid rounded" />
+      <img :src="require(`@/assets/${eventoImagenSrc}`)" :alt="`Evento ${eventoNumero}`" class="img-fluid rounded" />
     </a>
     <h3>{{ eventoTitulo }}</h3>
     <p>{{ eventoDescripcion }}</p>

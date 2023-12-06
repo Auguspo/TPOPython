@@ -4,7 +4,7 @@
     <ul class="canales-deportivos list-unstyled d-flex flex-wrap justify-content-between m-0 p-0">
       <li v-for="(canal, index) in canales" :key="index" class="col-md-4 mb-4">
         <a :href="canal.url" class="text-decoration-none">
-          <img :src="canal.imgSrc" :alt="`Canal ${index + 1}`" class="img-fluid rounded" />
+          <img :src="require(`@/assets/${canal.imgSrc}`)" :alt="`Canal ${index + 1}`" class="img-fluid rounded" />
           <h3 class="h5 mt-3">{{ canal.nombre }}</h3>
         </a>
       </li>

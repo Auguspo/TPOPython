@@ -1,5 +1,5 @@
 <template>
-  <div v-if="eventos && eventos.length > 0" class="container mt-5 min-vh-100">
+  <div class="container mt-5 min-vh-100">
     <h2 class="mb-4">Eventos en Vivo</h2>
 
     <button @click="abrirModalAgregar" class="btn btn-primary mb-4">Agregar Evento</button>

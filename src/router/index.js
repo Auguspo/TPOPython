@@ -3,7 +3,7 @@ import { createRouter, createWebHistory } from "vue-router"; // Asegúrate de im
 import InicioPage from "@/views/InicioPage.vue";
 import VivoPage from "@/views/VivoPage.vue";
 import ContactoPage from "@/views/ContactoPage.vue";
- import EquiposPage from '@/views/EquiposPage.vue';
+import EquiposPage from "@/views/EquiposPage.vue";
 
 const routes = [
   {
@@ -24,8 +24,13 @@ const routes = [
     component: ContactoPage,
     meta: { title: "Contacto - DeporNET" },
   },
-  
-    { path: '/equipos', name: 'EquiposPage', component: EquiposPage },
+
+  {
+    path: "/equipos",
+    name: "EquiposPage",
+    component: EquiposPage,
+    meta: { title: "Equipos - DeporNET" },
+  },
 ];
 
 const router = createRouter({
@@ -34,7 +39,6 @@ const router = createRouter({
   routes,
 });
 router.beforeEach((to, from, next) => {
-  // Cambiar dinámicamente el título de la página según la ruta
   document.title = to.meta.title || "DeporNET";
   next();
 });

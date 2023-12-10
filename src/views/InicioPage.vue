@@ -1,9 +1,13 @@
 <template>
+  <section id="inicio">
+    <h2>Bienvenidos a DeporNET</h2>
+  </section>
   <div class="container mt-5 min-vh-100">
+
     <h2 class="mb-4">Canales Deportivos en Argentina</h2>
     <ul class="canales-deportivos list-unstyled d-flex flex-wrap justify-content-between m-0 p-0">
       <li v-for="(canal, index) in canales" :key="index" class="col-md-4 mb-4">
-        <a :href="canal.url" class="text-decoration-none">
+        <a :href="canal.url" class="text-decoration-none" target="_blank">
           <img :src="require(`@/assets/${canal.imgSrc}`)" :alt="`Canal ${index + 1}`" class="img-fluid rounded" />
           <h3 class="h5 mt-3">{{ canal.nombre }}</h3>
         </a>
@@ -87,5 +91,26 @@ export default {
 .canales-deportivos h3 {
   font-size: 18px;
   margin-top: 10px;
+}
+
+
+#inicio {
+  background-image: url('../assets/banner.png');
+  background-size: cover;
+  background-position: center;
+  color: #fff;
+  text-align: center;
+  padding: 200px 0;
+  height: 200px;
+}
+
+#inicio h2 {
+  font-size: 36px;
+  margin: 20px 0;
+  color: black;
+}
+
+#inicio p {
+  font-size: 18px;
 }
 </style>

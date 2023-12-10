@@ -1,70 +1,87 @@
 <template>
-  <div class="evento">
-    <div class="live-badge bg-danger text-white">LIVE</div>
-    <a :href="eventoLink">
-      <img :src="require(`@/assets/${eventoImagenSrc}`)" :alt="`Evento ${eventoNumero}`" class="img-fluid rounded" />
-    </a>
-    <h3>{{ eventoTitulo }}</h3>
-    <p>{{ eventoDescripcion }}</p>
+  <div class="evento-component">
+    <div class="evento-info text-center">
+      <h3>{{ evento && evento.nombre }}</h3>
+      <img v-if="evento" :src="evento.imagen" :alt="evento.nombre" class="evento-imagen" />
+      <div v-if="eventoEnVivo" class="live-cartel">LIVE</div>
+      <p v-if="evento">{{ evento.descripcion }}</p>
+      <p v-if="evento"> {{ formatearFecha(evento.fecha_horario) }}</p>
+    </div>
+    <div class="evento-actions text-center mt-3">
+      <button @click="editarEvento" class="btn btn-primary mr-2">Editar</button>
+      <button @click="eliminarEvento" class="btn btn-danger">Eliminar</button>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
   props: {
-    eventoNumero: {
-      type: Number,
-      required: true,
+    evento: Object,
+  },
+  computed: {
+    eventoEnVivo() {
+    
+      const horaEvento = new Date(this.evento.fecha_horario).getTime();
+      const horaActual = new Date().getTime();
+      const unaHoraEnMilisegundos = 60 * 60 * 1000;
+
+      return horaActual >= horaEvento && horaActual <= horaEvento + unaHoraEnMilisegundos;
     },
-    eventoTitulo: {
-      type: String,
-      required: true,
+  },
+  methods: {
+    editarEvento() {
+     
+      this.$emit("editar", this.evento);
     },
-    eventoDescripcion: {
-      type: String,
-      required: true,
+    eliminarEvento() {
+    
+      this.$emit("eliminar", this.evento.id);
     },
-    eventoImagenSrc: {
-      type: String,
-      required: true,
-    },
-    eventoLink: {
-      type: String,
-      required: true,
+    formatearFecha(fecha) {
+   
+      const fechaFormateada = new Date(fecha).toLocaleString();
+      return fechaFormateada;
     },
   },
 };
 </script>
 
 <style scoped>
-/* Estilos específicos para el componente si es necesario */
-.evento {
-  position: relative;
-  background-color: #f9f9f9;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  text-align: center;
+.evento-component {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 10px;
+  margin: 10px;
   display: flex;
   flex-direction: column;
+  align-items: center;
   position: relative;
 }
 
-.live-badge {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  background-color: red;
-  color: #fff;
-  padding: 5px 10px;
-  border-radius: 5px;
-  font-weight: bold;
-  z-index: 1;
+.evento-info {
+  flex: 1;
+  width: 100%;
 }
 
-.evento img {
+.evento-imagen {
   max-width: 100%;
+  max-height: 200px;
   height: auto;
+  margin: auto;
+}
+
+.live-cartel {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: red;
+  color: white;
+  padding: 5px;
   border-radius: 5px;
+}
+
+.evento-actions {
+  width: 100%;
 }
 </style>

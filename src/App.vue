@@ -26,6 +26,5 @@ export default {
 
 .router-link-exact-active {
   font-weight: bold;
-  /* Otros estilos... */
 }
 </style>

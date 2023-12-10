@@ -1,7 +1,7 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
-      <router-link class="navbar-brand" to="/">DeporNET</router-link>
+      <img :src="require('@/assets/logo.png')" alt="logo" class="icono-navbar"> <router-link class="navbar-brand" to="/">DeporNET</router-link>
       <button
         class="navbar-toggler"
         type="button"
@@ -34,5 +34,8 @@
 </template>
 
 <style scoped>
-/* Estilos específicos para la barra de navegación si es necesario */
+.icono-navbar {
+  max-height: 30px; /* Ajusta el tamaño máximo de la imagen según tus necesidades */
+  margin-right: 10px; /* Espaciado entre el icono y el texto */
+}
 </style>

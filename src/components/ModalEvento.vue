@@ -25,7 +25,7 @@
          </div>
  
          <div class="mb-3">
-           <button type="submit" class="btn btn-primary">Guardar</button>
+          <button type="submit" class="btn btn-primary" @click="guardarEvento">Guardar</button>
            <button @click="cerrar" class="btn btn-secondary">Cancelar</button>
          </div>
  
@@ -36,7 +36,7 @@
  </template>
  
  <script>
- import axios from 'axios';
+
  
  export default {
    props: {
@@ -64,41 +64,9 @@
      },
    },
    methods: {
-     guardar() {
-       console.log("Guardando evento:", this.eventoEditado);
-       this.error = null;
- 
-       if (this.eventoEditado.id) {
- 
-         axios
-           .put(
-             `https://multitude6788.pythonanywhere.com/events/${this.eventoEditado.id}`,
-             this.eventoEditado
-           )
-           .then((response) => {
-             console.log("Evento editado exitosamente", response);
-             this.$emit("guardar", this.eventoEditado);
-             this.$emit("cerrar");
-           })
-           .catch((error) => {
-             console.error("Error al editar el evento:", error.message);
-             this.error = "Error al editar el evento. Verifica la consola para más detalles.";
-           });
-       } else {
- 
-         axios
-           .post('https://multitude6788.pythonanywhere.com/events', this.eventoEditado)
-           .then((response) => {
-             console.log("Evento creado exitosamente", response);
-             this.$emit("guardar", this.eventoEditado);
-             this.$emit("cerrar");
-           })
-           .catch((error) => {
-             console.error("Error al crear el nuevo evento:", error.message);
-             this.error = "Error al crear el nuevo evento. Verifica la consola para más detalles.";
-           });
-       }
-     },
+    guardarEvento() {
+      this.$emit("guardar-evento", this.eventoEditado);
+    },
      cerrar() {
        console.log("Cerrando modal");
        this.error = null;

@@ -1,15 +1,15 @@
 <template>
-  <div v-if="eventos && eventos.length > 0" class="container mt-5 min-vh-100">
+  <div  class="container mt-5 min-vh-100">
     <h2 class="mb-4">Eventos en Vivo</h2>
 
     <button @click="abrirModalAgregar" class="btn btn-primary mb-4">Agregar Evento</button>
 
-    <div class="grid-container">
+    <div v-if="eventos && eventos.length > 0" class="grid-container">
       <EventoComponent v-for="evento in eventos" :evento="evento" :key="evento.id" @editar="abrirModalEditar"
         @eliminar="eliminarEvento" />
     </div>
 
-    <ModalEvento :evento="eventoEditando" @guardar="guardarEvento" @cerrar="cerrarModal" />
+    <ModalEvento :evento="eventoEditando" @guardar-evento="guardarEvento" @cerrar="cerrarModal" />
   </div>
 </template>
 
@@ -67,34 +67,16 @@ export default {
     guardarEvento(eventoEditado) {
       console.log("Guardando en VivoPage:", eventoEditado);
 
-      if (eventoEditado.id) {
-        
-        axios
-          .put(
-            `https://multitude6788.pythonanywhere.com/events/${eventoEditado.id}`,
-            eventoEditado
-          )
-          .then((response) => {
-            console.log("Evento editado exitosamente", response);
-            this.obtenerEventos();
-            this.eventoEditando = null;
-          })
-          .catch((error) => {
-            console.error("Error al editar el evento", error);
-          });
-      } else {
-    
-        axios
-          .post('https://multitude6788.pythonanywhere.com/events', eventoEditado)
-          .then((response) => {
-            console.log("Evento creado exitosamente", response);
-            this.obtenerEventos();
-            this.eventoEditando = null;
-          })
-          .catch((error) => {
-            console.error("Error al crear el nuevo evento", error);
-          });
-      }
+      axios
+        .post('https://multitude6788.pythonanywhere.com/events', eventoEditado)
+        .then((response) => {
+          console.log("Evento creado exitosamente", response);
+          this.obtenerEventos();
+          this.cerrarModal();
+        })
+        .catch((error) => {
+          console.error("Error al crear el nuevo evento", error);
+        });
     },
 
     eliminarEvento(id) {

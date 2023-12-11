@@ -67,16 +67,34 @@ export default {
     guardarEvento(eventoEditado) {
       console.log("Guardando en VivoPage:", eventoEditado);
 
-      axios
-        .post('https://multitude6788.pythonanywhere.com/events', eventoEditado)
-        .then((response) => {
-          console.log("Evento creado exitosamente", response);
-          this.obtenerEventos();
-          this.cerrarModal();
-        })
-        .catch((error) => {
-          console.error("Error al crear el nuevo evento", error);
-        });
+      if (eventoEditado.id) {
+        
+        axios
+          .put(
+            `https://multitude6788.pythonanywhere.com/events/${eventoEditado.id}`,
+            eventoEditado
+          )
+          .then((response) => {
+            console.log("Evento editado exitosamente", response);
+            this.obtenerEventos();
+            this.eventoEditando = null;
+          })
+          .catch((error) => {
+            console.error("Error al editar el evento", error);
+          });
+      } else {
+    
+        axios
+          .post('https://multitude6788.pythonanywhere.com/events', eventoEditado)
+          .then((response) => {
+            console.log("Evento creado exitosamente", response);
+            this.obtenerEventos();
+            this.eventoEditando = null;
+          })
+          .catch((error) => {
+            console.error("Error al crear el nuevo evento", error);
+          });
+      }
     },
 
     eliminarEvento(id) {
